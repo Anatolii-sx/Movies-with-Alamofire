@@ -47,8 +47,8 @@ extension MoviesViewController {
     private func fetchData() {
         NetworkManager.shared.fetchMovies(url: NetworkManager.shared.url) { result in
             switch result {
-            case .success(let allMoviesDescriptions):
-                self.movies = allMoviesDescriptions.movies ?? []
+            case .success(let allMovies):
+                self.movies = allMovies.movies ?? []
                 self.collectionView.reloadData()
             case .failure(let error):
                 print(error)

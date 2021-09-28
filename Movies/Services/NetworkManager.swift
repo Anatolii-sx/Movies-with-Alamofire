@@ -6,11 +6,11 @@
 //
 
 import Foundation
+import Alamofire
 
 // You can use 1 token for only 10 free requests
 enum Token: String {
-    case tokenOne = "dcc9ee3f6e2b35a55462938d3514ac96"
-    case tokenTwo = "f9b1c2c02f9919bf405d41f2cd177bf9"
+    case tokenOne = "f9b1c2c02f9919bf405d41f2cd177bf9"
 }
 
 enum NetworkError: Error {
@@ -29,30 +29,19 @@ class NetworkManager {
     init() {}
     
     func fetchMovies(url: String, completion: @escaping (Result<AllMoviesDescriptions, NetworkError>) -> Void) {
-        guard let url = URL(string: url) else {
-            completion(.failure(.invalidURL))
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data else {
-                completion(.failure(.noData))
-                print(error?.localizedDescription ?? "No error with taking data")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let allMoviesDescriptions = try decoder.decode(AllMoviesDescriptions.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(.success(allMoviesDescriptions))
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                print(dataResponse)
+                switch dataResponse.result {
+                case .success(let value):
+                    let movies = AllMoviesDescriptions.getMovies(value: value)
+                    DispatchQueue.main.async {
+                        completion(.success(movies))
+                    }
+                case .failure(_):
+                    completion(.failure(.decodingError))
                 }
-            } catch {
-                completion(.failure(.decodingError))
             }
-        }.resume()
     }
 }
-
