@@ -10,7 +10,8 @@ import Alamofire
 
 // You can use 1 token for only 10 free requests
 enum Token: String {
-    case tokenOne = "f9b1c2c02f9919bf405d41f2cd177bf9"
+    case tokenOne = "45b5859b42728cda400e97b863ec99e9"
+    case tokenTwo = "bacdec4f4887e5194399c412edc8302a"
 }
 
 enum NetworkError: Error {
@@ -23,7 +24,7 @@ class NetworkManager {
     static let shared = NetworkManager()
     
     var url: String {
-        "https://api.kinopoisk.cloud/movies/all/page/\(Int.random(in: 1...500))/token/\(Token.tokenOne.rawValue)"
+        "https://api.kinopoisk.cloud/movies/all/page/\(Int.random(in: 1...500))/token/\(Token.tokenTwo.rawValue)"
     }
     
     init() {}

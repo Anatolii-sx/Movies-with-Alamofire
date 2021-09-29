@@ -26,7 +26,7 @@ class DescriptionViewController: UIViewController {
         
         titleLabel.text = movie.title
         yearLabel.text = "Год:  \(movie.year ?? 0)"
-        ratingLabel.text = "Рейтинг:  \(movie.rating_kinopoisk ?? "")"
+        ratingLabel.text = "Рейтинг:  \(movie.ratingKinopoisk ?? "")"
         descriptionLabel.text = "Описание:  \(movie.description ?? "")"
         
         let genres = movie.genres ?? []

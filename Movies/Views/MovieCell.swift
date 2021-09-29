@@ -28,7 +28,7 @@ class MovieCell: UICollectionViewCell {
         
         DispatchQueue.main.async {
             self.titleLabel.text = "\(movie.title ?? "")"
-            let rating = movie.rating_kinopoisk ?? ""
+            let rating = movie.ratingKinopoisk ?? ""
             let ratingDouble = Double(rating)
             let ratingAround = String(format: "%.01f", ratingDouble ?? 0)
             self.ratingLabel.text = ratingAround
